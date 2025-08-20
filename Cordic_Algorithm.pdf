@@ -1,0 +1,28 @@
+#CORDIC Algorithm 
+
+ The CORDIC (Coordinate Rotation Digital Computer) algorithm is an efficient iterative method forcomputing trigonometric, hyperbolic, exponential, logarithmic, and other transcendental functionsusing only shifts, additions, and table lookups. It avoids hardware multipliers, making it well-suitedfor FPGA and embedded DSP implementations.
+
+ ##Historical Background
+ The CORDIC method was introduced by Jack E. Volder in 1959 to simplify real-time navigation computations in airborne systems. Later, it was extended to handle a wide range of functions, andbecame widely used in calculators, DSPs, and FPGA-based signal processing designs.
+
+ ##Principle of Operation
+ The algorithm works by rotating a vector through a sequence of predefined angles. At eachiteration, the rotation direction is chosen to reduce the remaining angle toward zero. Each rotationuses a shift-and-add operation corresponding to a tangent value of 2-i . The sequence converges tothe target angle, and the vector's coordinates approach the sine and cosine values of that angle.
+
+ Rotation Mode Equations
+ Given an initial vector (x , y ) and angle z , each iteration i updates the values as follows:
+ x i+1 = x i - d i × y i × 2-i
+ y i+1 = y i + d i × x i × 2-i
+ z i+1 = z i - d i × atan(2-i )
+ where d i = +1 or -1 depending on the sign of the residual angle z i .
+
+ Scaling Factor
+ Each micro-rotation scales the vector length by √(1 + 2-2i ). After N iterations, the cumulative gainapproaches a constant K ≈ 0.607252935 for large N. In hardware designs, this scaling can becompensated once at the end or incorporated into the initial vector.
+
+ ##Applications
+- Generation of sine and cosine waveforms
+- Phase rotation in complex signal processing
+- Digital modulation/demodulation
+- Polar-to-Cartesian and Cartesian-to-Polar conversions
+- Calculators and function generators
+
+ The CORDIC algorithm's efficiency in shift-add operations makes it a timeless choice forresource-constrained systems. Modern FPGA-based oscillators, mixers, and vector rotators stillrely on CORDIC for precision and speed without sacrificing silicon area
